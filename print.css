@@ -1,69 +1,79 @@
 @page {
-  size: A4;
-  margin: 15mm;
+    size: A4;
+    margin: 15mm;
 }
 
 @media print {
 
-  body {
-    font-family: Arial, sans-serif;
-    font-size: 11pt;
-    line-height: 1.4;
-    color: #000;
-    background: #fff;
-  }
+    p {
+        text-align: center;
+    }
 
-  /* Remove weird web stuff */
-  nav, .navbar, .no-print {
-    display: none !important;
-  }
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 11pt;
+        line-height: 1.4;
+        color: #000;
+        background: #fff;
+    }
 
-  /* Force clean layout */
-  .container, .container-fluid {
-    width: 100% !important;
-    padding: 0 !important;
-  }
+    /* Remove weird web stuff */
+    nav,
+    .navbar,
+    .no-print {
+        display: none !important;
+    }
 
-  /* Kill flex issues */
-  .row {
-    display: block !important;
-  }
+    /* Force clean layout */
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        padding: 0 !important;
+    }
 
-  .col, [class*="col-"] {
-    width: 100% !important;
-    float: none !important;
-  }
+    /* Kill flex issues */
+    .row {
+        display: block !important;
+    }
 
-  /* Headings */
-  h1 {
-    font-size: 20pt;
-    margin-bottom: 5px;
-  }
+    .col,
+    [class*="col-"] {
+        width: 100% !important;
+        float: none !important;
+    }
 
-  h2 {
-    font-size: 13pt;
-    border-bottom: 1px solid #000;
-    margin-top: 15px;
-  }
+    /* Headings */
+    h1 {
+        font-size: 20pt;
+        margin-bottom: 5px;
+    }
 
-  h3 {
-    font-size: 11pt;
-    margin-bottom: 5px;
-  }
+    h2 {
+        font-size: 13pt;
+        border-bottom: 1px solid #000;
+        margin-top: 15px;
+    }
 
-  p, li {
-    font-size: 10.5pt;
-  }
+    h3 {
+        font-size: 11pt;
+        margin-bottom: 5px;
+    }
 
-  /* Avoid ugly page breaks */
-  section, .resume-section {
-    page-break-inside: avoid;
-    margin-bottom: 10px;
-  }
+    p,
+    li {
+        font-size: 10.5pt;
+    }
 
-  /* Links look professional */
-  a {
-    color: black;
-    text-decoration: none;
-  }
+    /* Avoid ugly page breaks */
+    section,
+    .resume-section {
+        page-break-inside: avoid;
+        margin-bottom: 10px;
+    }
+
+    /* Links look professional */
+    a {
+        color: black;
+        text-decoration: none;
+    }
 }
