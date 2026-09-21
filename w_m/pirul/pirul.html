@@ -113,9 +113,9 @@
     font-weight: 600; font-size: .97rem; border: 1.5px solid currentColor;
   }
   .status .dot { width: .7rem; height: .7rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 22%, transparent); }
-  .status.ok { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, transparent); }
-  .status.busy { color: var(--busy); background: color-mix(in srgb, var(--busy) 10%, transparent); }
-  .status.soon { color: var(--soon); background: color-mix(in srgb, var(--soon) 12%, transparent); }
+  .status.ok { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--bg)); }
+  .status.busy { color: var(--busy); background: color-mix(in srgb, var(--busy) 10%, var(--bg)); }
+  .status.soon { color: var(--soon); background: color-mix(in srgb, var(--soon) 12%, var(--bg)); }
   .status-note { margin: .75rem 0 0; color: var(--ink-soft); font-size: .98rem; min-height: 1.6em; }
 
   .title {
@@ -177,6 +177,7 @@
   .lead { color: var(--ink-soft); max-width: 60ch; margin: 0 0 2.5rem; }
 
   /* ---------- Recorrido ---------- */
+  .tour-grid > * { min-width: 0; }
   .tour-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
   .rooms { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
   .room {
@@ -278,6 +279,19 @@
   .foot { padding: 2rem 0 3rem; margin-top: 3rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .92rem; }
   .foot p { margin: 0 0 .25rem; }
 
+
+  .top-right { display: flex; align-items: center; gap: clamp(.9rem, 3vw, 2rem); }
+  .lang {
+    display: inline-flex; align-items: center; gap: .45rem;
+    min-height: 2.5rem; padding: 0 1rem 0 .8rem; border-radius: 999px;
+    border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+    font: 600 .92rem var(--sans); cursor: pointer; transition: background .2s, color .2s;
+  }
+  .lang .icon { width: 1.15rem; height: 1.15rem; }
+  .lang:hover { background: var(--ink); color: var(--bg); }
+  .contact .num { font-family: var(--serif); font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.1; color: #E8EFE4; letter-spacing: .01em; }
+  @media (max-width: 560px) { .top nav { display: none; } }
+
   /* ---------- Responsivo ---------- */
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; min-height: 0; }
@@ -285,7 +299,7 @@
     .top nav a { font-size: .92rem; }
     .art { width: min(100%, 380px); margin-top: .5rem; }
 
-    .tour-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .tour-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
     .stage { aspect-ratio: 1 / 1; }
     .rooms { flex-direction: row; overflow-x: auto; border-top: 0; gap: .5rem; padding-bottom: .5rem; margin-inline: -1.25rem; padding-inline: 1.25rem; scroll-snap-type: x proximity; }
     .room { width: auto; flex: none; padding: .6rem 1.1rem; border: 1px solid var(--line); border-radius: 999px; scroll-snap-align: center; }
@@ -315,39 +329,45 @@
   <div class="wrap">
     <header class="top">
       <a class="mark" href="#inicio">Pirul</a>
-      <nav aria-label="Secciones">
-        <a href="#recorrido">Recorrido</a>
-        <a href="#ubicacion">Ubicación</a>
-        <a href="#cerca">Cerca</a>
-      </nav>
+      <div class="top-right">
+        <nav data-i18n-aria="nav.aria" aria-label="Secciones">
+          <a href="#recorrido" data-i18n="nav.tour">Recorrido</a>
+          <a href="#ubicacion" data-i18n="nav.location">Ubicación</a>
+          <a href="#cerca" data-i18n="nav.nearby">Cerca</a>
+        </nav>
+        <button class="lang" type="button" id="langBtn" lang="en">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+          <span id="langLabel">English</span>
+        </button>
+      </div>
     </header>
 
     <div class="hero-grid">
       <div>
-        <div id="status" class="status ok"><span class="dot" aria-hidden="true"></span><span class="st-label">Disponible para rentar</span></div>
+        <div id="status" class="status busy"><span class="dot" aria-hidden="true"></span><span class="st-label"></span></div>
         <p class="status-note" id="statusNote"></p>
 
         <h1 class="title">Pirul</h1>
-        <p class="place">Departamento en Privalia Ambienta, Querétaro, México</p>
+        <p class="place" data-i18n="hero.place">Departamento en Privalia Ambienta, Querétaro, México</p>
 
         <ul class="facts">
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19V6"/><path d="M3 15h18v4"/><path d="M21 15v-3a3 3 0 0 0-3-3h-8v6"/><circle cx="6.5" cy="11.5" r="1.6"/></svg>
-            2 recámaras
+            <span data-i18n="hero.beds">2 recámaras</span>
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18v2.5A4.5 4.5 0 0 1 16.5 19h-9A4.5 4.5 0 0 1 3 14.5V12z"/><path d="M6 12V6.5A2.5 2.5 0 0 1 8.5 4 2.5 2.5 0 0 1 11 6.5"/><path d="M7 19l-1 2M17 19l1 2"/></svg>
-            2 baños
+            <span data-i18n="hero.baths">2 baños</span>
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5"/><path d="M3 12h18"/><path d="M5 17v2M19 17v2"/><circle cx="7.5" cy="14.5" r=".8"/><circle cx="16.5" cy="14.5" r=".8"/></svg>
-            2 cajones de estacionamiento
+            <span data-i18n="hero.parking">2 cajones de estacionamiento</span>
           </li>
         </ul>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#recorrido">Ver el recorrido</a>
-          <a class="btn btn-ghost" id="heroContact" href="#contacto" hidden>Agendar visita</a>
+          <a class="btn btn-primary" href="#recorrido" data-i18n="hero.tour">Ver el recorrido</a>
+          <a class="btn btn-ghost" id="heroContact" href="#contacto" hidden></a>
         </div>
       </div>
 
@@ -360,16 +380,16 @@
 
 <section class="section band" id="recorrido">
   <div class="wrap">
-    <h2>Recorre cada espacio</h2>
-    <p class="lead">Elige un espacio para ver sus fotos. Toca una imagen para verla en grande.</p>
+    <h2 data-i18n="tour.title">Recorre cada espacio</h2>
+    <p class="lead" data-i18n="tour.lead">Elige un espacio para ver sus fotos. Toca una imagen para verla en grande.</p>
 
     <div class="tour-grid">
-      <nav class="rooms" id="rooms" aria-label="Espacios del departamento"></nav>
+      <nav class="rooms" id="rooms" data-i18n-aria="tour.rooms" aria-label="Espacios del departamento"></nav>
 
       <div>
         <div class="edit-bar" id="editBar" hidden>
-          <p>Vista previa privada: las fotos que agregues aquí solo las ves tú, en este navegador. Envíalas por el chat para publicarlas para todos.</p>
-          <button class="btn btn-ghost" type="button" id="pickBtn">Agregar fotos</button>
+          <p data-i18n="edit.note">Vista previa privada.</p>
+          <button class="btn btn-ghost" type="button" id="pickBtn"></button>
         </div>
         <input type="file" id="pick" accept="image/*" multiple hidden>
 
@@ -378,27 +398,27 @@
           <button class="stage-open" type="button" id="open" hidden><img id="stageImg" alt=""></button>
           <div class="ph" id="ph">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>
-            <p>Las fotos de este espacio llegarán pronto.</p>
+            <p data-i18n="tour.ph">Las fotos de este espacio llegarán pronto.</p>
           </div>
-          <button class="nav-btn nav-prev" type="button" id="prev" aria-label="Foto anterior" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <button class="nav-btn nav-next" type="button" id="next" aria-label="Foto siguiente" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <button class="nav-btn nav-prev" type="button" id="prev" data-i18n-aria="tour.prev" aria-label="Foto anterior" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="nav-btn nav-next" type="button" id="next" data-i18n-aria="tour.next" aria-label="Foto siguiente" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
           <span class="badge" id="badge" hidden></span>
         </div>
 
         <div class="cap"><h3 id="capTitle"></h3><p id="capText"></p></div>
-        <div class="thumbs" id="thumbs" aria-label="Fotos del espacio"></div>
+        <div class="thumbs" id="thumbs" data-i18n-aria="tour.thumbs" aria-label="Fotos del espacio"></div>
       </div>
     </div>
   </div>
 </section>
 
-<dialog id="lb" aria-label="Galería de fotos">
+<dialog id="lb" data-i18n-aria="lb.label" aria-label="Galería de fotos">
   <div class="lb-inner" id="lbInner">
-    <button class="lb-close" type="button" id="lbClose" aria-label="Cerrar galería"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-close" type="button" id="lbClose" data-i18n-aria="lb.close" aria-label="Cerrar galería"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="lb-view" id="lbView">
-      <button class="lb-prev" type="button" id="lbPrev" aria-label="Foto anterior"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="lb-prev" type="button" id="lbPrev" data-i18n-aria="tour.prev" aria-label="Foto anterior"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
       <img id="lbImg" alt="">
-      <button class="lb-next" type="button" id="lbNext" aria-label="Foto siguiente"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="lb-next" type="button" id="lbNext" data-i18n-aria="tour.next" aria-label="Foto siguiente"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <p class="lb-cap" id="lbCap"></p>
   </div>
@@ -408,11 +428,11 @@
   <div class="wrap loc-grid">
     <div>
       <h2>Privalia Ambienta</h2>
-      <address>Anillo Vial Fray Junípero Serra<br>C.P. 76147, Querétaro, México</address>
-      <p>Fraccionamiento con salida directa al Anillo Vial Fray Junípero Serra y conexión con Prolongación Corregidora, en una zona con acceso rápido a las principales vialidades de la ciudad.</p>
+      <address data-i18n-html="loc.address">Anillo Vial Fray Junípero Serra<br>C.P. 76147, Querétaro, México</address>
+      <p data-i18n="loc.text">Fraccionamiento con salida directa al Anillo Vial Fray Junípero Serra.</p>
       <div class="btns">
-        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Privalia+Ambienta+Queretaro" target="_blank" rel="noopener">Abrir en Google Maps</a>
-        <a class="btn btn-ghost" href="https://waze.com/ul?q=Privalia%20Ambienta%20Queretaro&navigate=yes" target="_blank" rel="noopener">Abrir en Waze</a>
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Privalia+Ambienta+Queretaro" target="_blank" rel="noopener" data-i18n="loc.gmaps">Abrir en Google Maps</a>
+        <a class="btn btn-ghost" href="https://waze.com/ul?q=Privalia%20Ambienta%20Queretaro&navigate=yes" target="_blank" rel="noopener" data-i18n="loc.waze">Abrir en Waze</a>
       </div>
     </div>
 
@@ -422,19 +442,19 @@
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1.5-5h13L20 9"/><path d="M4 9v11h16V9"/><path d="M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9"/><path d="M10 20v-5h4v5"/></svg>
         </div>
         <div>
-          <h3>OXXO dentro del fraccionamiento</h3>
-          <p>Para lo del día a día, sin tener que salir.</p>
+          <h3 data-i18n="oxxo.title">OXXO dentro del fraccionamiento</h3>
+          <p data-i18n="oxxo.text">Para lo del día a día, sin tener que salir.</p>
         </div>
       </div>
 
-      <h3>Amenidades del fraccionamiento</h3>
+      <h3 data-i18n="amen.title">Amenidades del fraccionamiento</h3>
       <ul class="amen">
-        <li>Vigilancia 24/7</li>
-        <li>Áreas verdes</li>
-        <li>Juegos infantiles</li>
-        <li>Área de asadores</li>
-        <li>Parque canino</li>
-        <li>Cancha multiusos</li>
+        <li data-i18n="amen.1">Vigilancia 24/7</li>
+        <li data-i18n="amen.2">Áreas verdes</li>
+        <li data-i18n="amen.3">Juegos infantiles</li>
+        <li data-i18n="amen.4">Área de asadores</li>
+        <li data-i18n="amen.5">Parque canino</li>
+        <li data-i18n="amen.6">Cancha multiusos</li>
       </ul>
     </div>
   </div>
@@ -442,26 +462,26 @@
 
 <section class="section band" id="cerca">
   <div class="wrap">
-    <h2>Todo a unos minutos</h2>
-    <p class="lead">Tiempos aproximados en auto. Pueden cambiar según el tráfico y la hora.</p>
+    <h2 data-i18n="near.title">Todo a unos minutos</h2>
+    <p class="lead" data-i18n="near.lead">Tiempos aproximados en auto.</p>
     <ul class="times" id="times"></ul>
 
     <div class="groups">
       <div>
-        <h3>Supermercados</h3>
+        <h3 data-i18n="grp.super">Supermercados</h3>
         <ul><li>Walmart</li><li>HEB</li><li>Chedraui</li><li>Fresko</li></ul>
       </div>
       <div>
-        <h3>Escuelas</h3>
-        <ul><li>Colegio Newland</li><li>Tecnológico Nacional de México, campus Querétaro</li></ul>
+        <h3 data-i18n="grp.schools">Escuelas</h3>
+        <ul><li>Colegio Newland</li><li data-i18n="grp.tec">Tecnológico Nacional de México, campus Querétaro</li></ul>
       </div>
       <div>
-        <h3>Vialidades</h3>
-        <ul><li>Anillo Vial Fray Junípero Serra</li><li>Prolongación Corregidora</li><li>Blvd. Bernardo Quintana</li><li>Autopista México–Querétaro</li></ul>
+        <h3 data-i18n="grp.roads">Vialidades</h3>
+        <ul><li>Anillo Vial Fray Junípero Serra</li><li>Prolongación Corregidora</li><li>Blvd. Bernardo Quintana</li><li data-i18n="grp.hwy">Autopista México–Querétaro</li></ul>
       </div>
       <div>
-        <h3>Y en la zona</h3>
-        <p>Hospitales, restaurantes, gimnasios y centros de entretenimiento.</p>
+        <h3 data-i18n="grp.area">Y en la zona</h3>
+        <p data-i18n="grp.areaText">Hospitales, restaurantes, gimnasios y centros de entretenimiento.</p>
       </div>
     </div>
   </div>
@@ -472,14 +492,15 @@
     <div class="contact">
       <h2 id="contactTitle"></h2>
       <p id="contactText"></p>
+      <p class="num" id="contactNum"></p>
       <div class="actions" id="contactActions"></div>
     </div>
   </div>
 </section>
 
 <footer class="wrap foot">
-  <p>Departamento Pirul, Privalia Ambienta, Querétaro, México.</p>
-  <p>Los tiempos y las amenidades son informativos y pueden variar.</p>
+  <p data-i18n="foot.1">Departamento Pirul, Privalia Ambienta, Querétaro, México.</p>
+  <p data-i18n="foot.2">Los tiempos y las amenidades son informativos y pueden variar.</p>
 </footer>
 
 <script>
@@ -487,15 +508,15 @@
   'use strict';
 
   /* ==========================================================
-     CONFIGURACIÓN: esto es lo único que hay que editar
+     CONFIGURACIÓN / SETTINGS: lo único que hay que editar
      ========================================================== */
   const CONFIG = {
-    estado: 'disponible',   // 'disponible' | 'ocupado' | 'proximamente'
-    disponibleDesde: '',    // Ej.: '1 de noviembre de 2026' (para 'proximamente' u 'ocupado')
+    estado: 'ocupado',      // 'disponible' | 'ocupado' | 'proximamente'
+    disponibleDesde: '',    // Texto libre, ej.: '1 de noviembre de 2026' (para 'proximamente' u 'ocupado')
     renta: '',              // Ej.: '$12,000 al mes'
-    whatsapp: '',           // Ej.: '4421234567' (10 dígitos)
-    telefono: '',           // Ej.: '4421234567'
-    correo: ''              // Ej.: 'hola@correo.com'
+    whatsapp: '+525544436754',
+    telefono: '+525544436754',
+    correo: ''
   };
 
   // Fotos: cada espacio recibe una lista de imágenes (data URI o ruta).
@@ -533,56 +554,186 @@
     'estacionamiento': []
   };
 
+  /* ---------- Textos en español e inglés ---------- */
+  const T = {
+    es: {
+      'meta.title': 'Pirul, departamento en Privalia Ambienta, Querétaro',
+      'meta.desc': 'Departamento Pirul en Privalia Ambienta, Querétaro: 2 recámaras, 2 baños y 2 cajones de estacionamiento. Consulta si está disponible para rentar y recorre cada espacio.',
+      'nav.aria': 'Secciones', 'nav.tour': 'Recorrido', 'nav.location': 'Ubicación', 'nav.nearby': 'Cerca',
+      'hero.place': 'Departamento en Privalia Ambienta, Querétaro, México',
+      'hero.beds': '2 recámaras', 'hero.baths': '2 baños', 'hero.parking': '2 cajones de estacionamiento',
+      'hero.tour': 'Ver el recorrido', 'hero.ph': 'Las fotos del departamento llegarán pronto.',
+      'st.ok': 'Disponible para rentar', 'st.busy': 'Rentado por ahora', 'st.soon': 'Próximamente disponible',
+      'st.rent': 'Renta: {v}', 'st.soonDate': 'Disponible a partir del {v}', 'st.soonNoDate': 'Pronto estará libre.',
+      'st.busyDate': 'Se libera el {v}.', 'st.busyNoDate': 'Por ahora no está disponible.',
+      'tour.title': 'Recorre cada espacio',
+      'tour.lead': 'Elige un espacio para ver sus fotos. Toca una imagen para verla en grande.',
+      'tour.rooms': 'Espacios del departamento', 'tour.thumbs': 'Fotos del espacio',
+      'tour.ph': 'Las fotos de este espacio llegarán pronto.',
+      'tour.prev': 'Foto anterior', 'tour.next': 'Foto siguiente',
+      'count.none': 'Sin fotos', 'count.soon': 'Próximamente', 'count.one': '1 foto', 'count.many': '{n} fotos',
+      'stage.open': 'Ampliar foto de {name}',
+      'stage.alt': '{name} del departamento Pirul, foto {i} de {n}',
+      'thumb.view': 'Ver foto {i} de {n}',
+      'lb.label': 'Galería de fotos', 'lb.close': 'Cerrar galería', 'lb.cap': '{name}, foto {i} de {n}',
+      'edit.note': 'Vista previa privada: las fotos que agregues aquí solo las ves tú, en este navegador. Envíalas por el chat para publicarlas para todos.',
+      'edit.add': 'Agregar fotos a {name}',
+      'loc.address': 'Anillo Vial Fray Junípero Serra<br>C.P. 76147, Querétaro, México',
+      'loc.text': 'Fraccionamiento con salida directa al Anillo Vial Fray Junípero Serra y conexión con Prolongación Corregidora, en una zona con acceso rápido a las principales vialidades de la ciudad.',
+      'loc.gmaps': 'Abrir en Google Maps', 'loc.waze': 'Abrir en Waze',
+      'oxxo.title': 'OXXO dentro del fraccionamiento', 'oxxo.text': 'Para lo del día a día, sin tener que salir.',
+      'amen.title': 'Amenidades del fraccionamiento',
+      'amen.1': 'Vigilancia 24/7', 'amen.2': 'Áreas verdes', 'amen.3': 'Juegos infantiles',
+      'amen.4': 'Área de asadores', 'amen.5': 'Parque canino', 'amen.6': 'Cancha multiusos',
+      'near.title': 'Todo a unos minutos',
+      'near.lead': 'Tiempos aproximados en auto. Pueden cambiar según el tráfico y la hora.',
+      'near.min': '{n} min', 'near.aria': 'Aproximadamente {n} minutos en auto',
+      'grp.super': 'Supermercados', 'grp.schools': 'Escuelas', 'grp.tec': 'Tecnológico Nacional de México, campus Querétaro',
+      'grp.roads': 'Vialidades', 'grp.hwy': 'Autopista México–Querétaro',
+      'grp.area': 'Y en la zona', 'grp.areaText': 'Hospitales, restaurantes, gimnasios y centros de entretenimiento.',
+      'c.titleFree': '¿Quieres conocerlo?', 'c.titleBusy': '¿Te avisamos cuando se libere?',
+      'c.textFree': 'Escríbenos y agendamos una visita al departamento.',
+      'c.textBusy': 'Escríbenos y te avisamos en cuanto Pirul esté disponible para rentar.',
+      'c.heroFree': 'Agendar visita', 'c.heroBusy': 'Avisarme cuando se libere',
+      'c.msgFree': 'Hola, me interesa el departamento Pirul en Privalia Ambienta. Me gustaría agendar una visita.',
+      'c.msgBusy': 'Hola, me gustaría que me avisen cuando el departamento Pirul en Privalia Ambienta esté disponible.',
+      'c.wa': 'Escribir por WhatsApp', 'c.call': 'Llamar', 'c.mail': 'Enviar correo',
+      'foot.1': 'Departamento Pirul, Privalia Ambienta, Querétaro, México.',
+      'foot.2': 'Los tiempos y las amenidades son informativos y pueden variar.'
+    },
+    en: {
+      'meta.title': 'Pirul, apartment in Privalia Ambienta, Querétaro',
+      'meta.desc': 'Pirul apartment in Privalia Ambienta, Querétaro: 2 bedrooms, 2 bathrooms and 2 parking spaces. See if it is available to rent and tour every space.',
+      'nav.aria': 'Sections', 'nav.tour': 'Tour', 'nav.location': 'Location', 'nav.nearby': 'Nearby',
+      'hero.place': 'Apartment in Privalia Ambienta, Querétaro, Mexico',
+      'hero.beds': '2 bedrooms', 'hero.baths': '2 bathrooms', 'hero.parking': '2 parking spaces',
+      'hero.tour': 'View the tour', 'hero.ph': 'Photos of the apartment are coming soon.',
+      'st.ok': 'Available to rent', 'st.busy': 'Currently rented', 'st.soon': 'Available soon',
+      'st.rent': 'Rent: {v}', 'st.soonDate': 'Available from {v}', 'st.soonNoDate': 'It will be available soon.',
+      'st.busyDate': 'Available again on {v}.', 'st.busyNoDate': 'Not available right now.',
+      'tour.title': 'Tour every space',
+      'tour.lead': 'Pick a space to see its photos. Tap an image to view it larger.',
+      'tour.rooms': 'Apartment spaces', 'tour.thumbs': 'Photos of this space',
+      'tour.ph': 'Photos of this space are coming soon.',
+      'tour.prev': 'Previous photo', 'tour.next': 'Next photo',
+      'count.none': 'No photos', 'count.soon': 'Coming soon', 'count.one': '1 photo', 'count.many': '{n} photos',
+      'stage.open': 'Enlarge photo of {name}',
+      'stage.alt': '{name} at the Pirul apartment, photo {i} of {n}',
+      'thumb.view': 'View photo {i} of {n}',
+      'lb.label': 'Photo gallery', 'lb.close': 'Close gallery', 'lb.cap': '{name}, photo {i} of {n}',
+      'edit.note': 'Private preview: photos you add here are only visible to you, in this browser. Send them through the chat to publish them for everyone.',
+      'edit.add': 'Add photos to {name}',
+      'loc.address': 'Anillo Vial Fray Junípero Serra<br>C.P. 76147, Querétaro, Mexico',
+      'loc.text': 'A residential community with direct access to Anillo Vial Fray Junípero Serra and a connection to Prolongación Corregidora, in an area with quick access to the city\u2019s main roads.',
+      'loc.gmaps': 'Open in Google Maps', 'loc.waze': 'Open in Waze',
+      'oxxo.title': 'OXXO inside the community', 'oxxo.text': 'For everyday needs, without leaving the community.',
+      'amen.title': 'Community amenities',
+      'amen.1': '24/7 security', 'amen.2': 'Green areas', 'amen.3': 'Playground',
+      'amen.4': 'Grill area', 'amen.5': 'Dog park', 'amen.6': 'Multipurpose court',
+      'near.title': 'Everything within minutes',
+      'near.lead': 'Approximate driving times. They may vary with traffic and time of day.',
+      'near.min': '{n} min', 'near.aria': 'About {n} minutes by car',
+      'grp.super': 'Supermarkets', 'grp.schools': 'Schools', 'grp.tec': 'Tecnológico Nacional de México, Querétaro campus',
+      'grp.roads': 'Main roads', 'grp.hwy': 'México–Querétaro highway',
+      'grp.area': 'Also in the area', 'grp.areaText': 'Hospitals, restaurants, gyms and entertainment centers.',
+      'c.titleFree': 'Want to see it?', 'c.titleBusy': 'Want us to let you know when it\u2019s available?',
+      'c.textFree': 'Message us and we\u2019ll schedule a visit to the apartment.',
+      'c.textBusy': 'Message us and we\u2019ll let you know as soon as Pirul is available to rent.',
+      'c.heroFree': 'Schedule a visit', 'c.heroBusy': 'Notify me when it\u2019s available',
+      'c.msgFree': 'Hello, I\u2019m interested in the Pirul apartment in Privalia Ambienta. I\u2019d like to schedule a visit.',
+      'c.msgBusy': 'Hello, I\u2019d like to be notified when the Pirul apartment in Privalia Ambienta becomes available.',
+      'c.wa': 'Message on WhatsApp', 'c.call': 'Call', 'c.mail': 'Send email',
+      'foot.1': 'Pirul apartment, Privalia Ambienta, Querétaro, Mexico.',
+      'foot.2': 'Times and amenities are for reference and may vary.'
+    }
+  };
+
   const SPACES = [
-    { id: 'sala-comedor',        name: 'Sala y comedor',       text: 'Sala y comedor en un mismo espacio, para recibir y convivir.' },
-    { id: 'cocina',              name: 'Cocina',               text: 'El lugar donde se prepara todo el día a día.' },
-    { id: 'lavado',              name: 'Cuarto de lavado',     text: 'Un cuarto propio para la lavandería.' },
-    { id: 'pasillo',              name: 'Pasillo',              text: 'El pasillo hacia las recámaras y los baños.' },
-    { id: 'recamara-secundaria', name: 'Recámara secundaria',  text: 'Una segunda recámara para familia, visitas o home office.' },
-    { id: 'bano-secundario',     name: 'Baño secundario',      text: 'El baño de la recámara secundaria.' },
-    { id: 'recamara-principal',  name: 'Recámara principal',   text: 'La recámara principal del departamento.' },
-    { id: 'bano-principal',      name: 'Baño principal',       text: 'El baño de la recámara principal.' },
-    { id: 'estacionamiento',     name: 'Estacionamiento',      text: 'Dos cajones de estacionamiento.' }
+    { id: 'sala-comedor',        name: { es: 'Sala y comedor',      en: 'Living and dining room' },
+      text: { es: 'Sala y comedor en un mismo espacio, para recibir y convivir.', en: 'Living and dining room in one open space, made for hosting and relaxing.' } },
+    { id: 'cocina',              name: { es: 'Cocina',              en: 'Kitchen' },
+      text: { es: 'El lugar donde se prepara todo el día a día.', en: 'Where everyday meals come together.' } },
+    { id: 'lavado',              name: { es: 'Cuarto de lavado',    en: 'Laundry room' },
+      text: { es: 'Un cuarto propio para la lavandería.', en: 'A dedicated room for laundry.' } },
+    { id: 'pasillo',             name: { es: 'Pasillo',             en: 'Hallway' },
+      text: { es: 'El pasillo hacia las recámaras y los baños.', en: 'The hallway leading to the bedrooms and bathrooms.' } },
+    { id: 'recamara-secundaria', name: { es: 'Recámara secundaria', en: 'Second bedroom' },
+      text: { es: 'Una segunda recámara para familia, visitas o home office.', en: 'A second bedroom for family, guests or a home office.' } },
+    { id: 'bano-secundario',     name: { es: 'Baño secundario',     en: 'Second bathroom' },
+      text: { es: 'El baño de la recámara secundaria.', en: 'The bathroom for the second bedroom.' } },
+    { id: 'recamara-principal',  name: { es: 'Recámara principal',  en: 'Main bedroom' },
+      text: { es: 'La recámara principal del departamento.', en: 'The apartment\u2019s main bedroom.' } },
+    { id: 'bano-principal',      name: { es: 'Baño principal',      en: 'Main bathroom' },
+      text: { es: 'El baño de la recámara principal.', en: 'The bathroom for the main bedroom.' } },
+    { id: 'estacionamiento',     name: { es: 'Estacionamiento',     en: 'Parking' },
+      text: { es: 'Dos cajones de estacionamiento.', en: 'Two parking spaces.' } }
   ];
 
   const CERCA = [
-    { n: 'Plaza Antea',          t: 'Centro comercial',      m: 10 },
-    { n: 'Plazas en El Refugio', t: 'Comercios y servicios', m: 10 },
-    { n: 'Colegio Newland',      t: 'Escuela',               m: 10 },
-    { n: 'Paseo Querétaro',      t: 'Centro comercial',      m: 12 },
-    { n: 'Uptown Juriquilla',    t: 'Centro comercial',      m: 12 }
+    { n: 'Plaza Antea',          t: { es: 'Centro comercial',      en: 'Shopping center' },   m: 10 },
+    { n: { es: 'Plazas en El Refugio', en: 'Plazas at El Refugio' }, t: { es: 'Comercios y servicios', en: 'Shops and services' }, m: 10 },
+    { n: 'Colegio Newland',      t: { es: 'Escuela',               en: 'School' },            m: 10 },
+    { n: 'Paseo Querétaro',      t: { es: 'Centro comercial',      en: 'Shopping center' },   m: 12 },
+    { n: 'Uptown Juriquilla',    t: { es: 'Centro comercial',      en: 'Shopping center' },   m: 12 }
   ];
 
   const ESTADOS = {
-    disponible:   { cls: 'ok',   label: 'Disponible para rentar' },
-    ocupado:      { cls: 'busy', label: 'Rentado por ahora' },
-    proximamente: { cls: 'soon', label: 'Próximamente disponible' }
+    disponible:   { cls: 'ok',   key: 'st.ok' },
+    ocupado:      { cls: 'busy', key: 'st.busy' },
+    proximamente: { cls: 'soon', key: 'st.soon' }
   };
 
   /* ========================================================== */
 
   const $ = (s) => document.querySelector(s);
+
+  /* ---------- Idioma ---------- */
+  function savedLang() { try { return localStorage.getItem('pirul-lang'); } catch (e) { return null; } }
+  function saveLang(v) { try { localStorage.setItem('pirul-lang', v); } catch (e) {} }
+  let lang = 'es';
+  (function initLang() {
+    let q = null;
+    try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+    const fromUrl = (q === 'en' || q === 'es') ? q : null;
+    const nav = ((navigator.language || 'es') + '').toLowerCase().indexOf('en') === 0 ? 'en' : 'es';
+    lang = fromUrl || savedLang() || nav;
+    if (lang !== 'en' && lang !== 'es') lang = 'es';
+  })();
+
+  function t(key, vars) {
+    let s = (T[lang] && T[lang][key]) || T.es[key] || key;
+    if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]);
+    return s;
+  }
+  const L = (o) => (o && typeof o === 'object') ? o[lang] : o;
+
   const photos = {};
   SPACES.forEach((s) => { photos[s.id] = (FOTOS[s.id] || []).slice(); });
   let cur = 0, idx = 0, editMode = false;
 
   /* ---------- Estado de renta ---------- */
   function hasContact() { return !!(CONFIG.whatsapp || CONFIG.telefono || CONFIG.correo); }
+  function fmtPhone(raw) {
+    const d = (raw || '').replace(/\D/g, '');
+    if (d.length === 12 && d.indexOf('52') === 0) return '+52 ' + d.slice(2, 4) + ' ' + d.slice(4, 8) + ' ' + d.slice(8);
+    if (d.length === 10) return d.slice(0, 2) + ' ' + d.slice(2, 6) + ' ' + d.slice(6);
+    return raw || '';
+  }
 
   function renderStatus() {
     const key = ESTADOS[CONFIG.estado] ? CONFIG.estado : 'disponible';
     const e = ESTADOS[key];
     const box = $('#status');
     box.className = 'status ' + e.cls;
-    box.querySelector('.st-label').textContent = e.label;
+    box.querySelector('.st-label').textContent = t(e.key);
 
     let note = '';
     if (key === 'disponible') {
-      note = CONFIG.renta ? 'Renta: ' + CONFIG.renta : '';
+      note = CONFIG.renta ? t('st.rent', { v: CONFIG.renta }) : '';
     } else if (key === 'proximamente') {
-      note = CONFIG.disponibleDesde ? 'Disponible a partir del ' + CONFIG.disponibleDesde : 'Pronto estará libre.';
+      note = CONFIG.disponibleDesde ? t('st.soonDate', { v: CONFIG.disponibleDesde }) : t('st.soonNoDate');
     } else {
-      note = CONFIG.disponibleDesde ? 'Se libera el ' + CONFIG.disponibleDesde + '.' : 'Por ahora no está disponible.';
+      note = CONFIG.disponibleDesde ? t('st.busyDate', { v: CONFIG.disponibleDesde }) : t('st.busyNoDate');
     }
     $('#statusNote').textContent = note;
   }
@@ -594,17 +745,15 @@
 
     const key = ESTADOS[CONFIG.estado] ? CONFIG.estado : 'disponible';
     const libre = key === 'disponible';
-    const title = libre ? '¿Quieres conocerlo?' : '¿Te avisamos cuando se libere?';
-    const text = libre
-      ? 'Escríbenos y agendamos una visita al departamento.'
-      : 'Escríbenos y te avisamos en cuanto Pirul esté disponible para rentar.';
-    const msg = libre
-      ? 'Hola, me interesa el departamento Pirul en Privalia Ambienta. Me gustaría agendar una visita.'
-      : 'Hola, me gustaría que me avisen cuando el departamento Pirul en Privalia Ambienta esté disponible.';
+    const msg = t(libre ? 'c.msgFree' : 'c.msgBusy');
 
-    $('#contactTitle').textContent = title;
-    $('#contactText').textContent = text;
-    heroBtn.textContent = libre ? 'Agendar visita' : 'Avisarme cuando se libere';
+    $('#contactTitle').textContent = t(libre ? 'c.titleFree' : 'c.titleBusy');
+    $('#contactText').textContent = t(libre ? 'c.textFree' : 'c.textBusy');
+    heroBtn.textContent = t(libre ? 'c.heroFree' : 'c.heroBusy');
+
+    const shown = fmtPhone(CONFIG.telefono || CONFIG.whatsapp);
+    $('#contactNum').textContent = shown;
+    $('#contactNum').hidden = !shown;
 
     const box = $('#contactActions');
     box.innerHTML = '';
@@ -620,11 +769,11 @@
     if (CONFIG.whatsapp) {
       let num = CONFIG.whatsapp.replace(/\D/g, '');
       if (num.length === 10) num = '52' + num;
-      add('Escribir por WhatsApp', 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg), first, true);
+      add(t('c.wa'), 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg), first, true);
       first = false;
     }
-    if (CONFIG.telefono) { add('Llamar', 'tel:' + CONFIG.telefono.replace(/[^\d+]/g, ''), first, false); first = false; }
-    if (CONFIG.correo) { add('Enviar correo', 'mailto:' + CONFIG.correo + '?subject=' + encodeURIComponent('Departamento Pirul') + '&body=' + encodeURIComponent(msg), first, false); }
+    if (CONFIG.telefono) { add(t('c.call'), 'tel:' + CONFIG.telefono.replace(/[^\d+]/g, ''), first, false); first = false; }
+    if (CONFIG.correo) { add(t('c.mail'), 'mailto:' + CONFIG.correo + '?subject=' + encodeURIComponent('Pirul') + '&body=' + encodeURIComponent(msg), first, false); }
 
     sec.hidden = false;
     heroBtn.hidden = false;
@@ -643,10 +792,14 @@
     if (src) {
       const img = new Image();
       img.src = src;
-      img.alt = 'Departamento Pirul en Privalia Ambienta';
+      img.alt = lang === 'en' ? 'Pirul apartment in Privalia Ambienta' : 'Departamento Pirul en Privalia Ambienta';
       arch.appendChild(img);
     } else {
-      arch.innerHTML = '<div class="arch-ph"><p>Las fotos del departamento llegarán pronto.</p></div>';
+      const d = document.createElement('div');
+      d.className = 'arch-ph';
+      d.innerHTML = '<p></p>';
+      d.querySelector('p').textContent = t('hero.ph');
+      arch.appendChild(d);
     }
   }
 
@@ -654,9 +807,9 @@
   function rng(a) {
     return function () {
       a |= 0; a = a + 0x6D2B79F5 | 0;
-      let t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      let x = Math.imul(a ^ a >>> 15, 1 | a);
+      x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x;
+      return ((x ^ x >>> 14) >>> 0) / 4294967296;
     };
   }
   function drawBranch(svg) {
@@ -668,9 +821,9 @@
       return e;
     };
     const P0 = [700, -10], P1 = [430, -50], P2 = [60, 54];
-    const B = (t) => {
-      const u = 1 - t;
-      return [u * u * P0[0] + 2 * u * t * P1[0] + t * t * P2[0], u * u * P0[1] + 2 * u * t * P1[1] + t * t * P2[1]];
+    const B = (u0) => {
+      const u = 1 - u0;
+      return [u * u * P0[0] + 2 * u * u0 * P1[0] + u0 * u0 * P2[0], u * u * P0[1] + 2 * u * u0 * P1[1] + u0 * u0 * P2[1]];
     };
     const f = (n) => n.toFixed(1);
 
@@ -678,9 +831,9 @@
 
     const N = 16, step = 11;
     for (let i = 0; i < N; i++) {
-      const t = 0.13 + i * (0.84 / (N - 1)) + (R() - 0.5) * 0.02;
-      const p0 = B(t), x0 = p0[0], y0 = p0[1];
-      const bell = Math.max(0.15, Math.sin(Math.PI * Math.min(1, (t - 0.05) * 1.1)));
+      const tt = 0.13 + i * (0.84 / (N - 1)) + (R() - 0.5) * 0.02;
+      const p0 = B(tt), x0 = p0[0], y0 = p0[1];
+      const bell = Math.max(0.15, Math.sin(Math.PI * Math.min(1, (tt - 0.05) * 1.1)));
       const len = 130 + 250 * bell * (0.65 + R() * 0.55);
       const n = Math.floor(len / step);
       const phase = R() * 6.28, amp = 3 + R() * 5, lean = (R() - 0.6) * 0.10;
@@ -710,14 +863,14 @@
     }
 
     // racimos de pimienta rosa
-    [0.24, 0.42, 0.6, 0.78].forEach((t) => {
-      const p = B(t);
+    [0.24, 0.42, 0.6, 0.78].forEach((tt) => {
+      const p = B(tt);
       const g = mk('g', { 'class': 'strand' });
       g.style.setProperty('--a', (1 + R() * 1.2).toFixed(2) + 'deg');
       g.style.setProperty('--s', (9 + R() * 4).toFixed(1) + 's');
       g.style.setProperty('--d', (-R() * 8).toFixed(1) + 's');
-      const L = 60 + R() * 60, ex = p[0] + (R() - 0.5) * 14, ey = p[1] + L;
-      mk('path', { d: 'M' + f(p[0]) + ' ' + f(p[1]) + ' Q' + f(p[0] + 8) + ' ' + f(p[1] + L / 2) + ' ' + f(ex) + ' ' + f(ey), 'class': 'st' }, g);
+      const Ln = 60 + R() * 60, ex = p[0] + (R() - 0.5) * 14, ey = p[1] + Ln;
+      mk('path', { d: 'M' + f(p[0]) + ' ' + f(p[1]) + ' Q' + f(p[0] + 8) + ' ' + f(p[1] + Ln / 2) + ' ' + f(ex) + ' ' + f(ey), 'class': 'st' }, g);
       for (let j = 0; j < 10; j++) {
         mk('circle', {
           cx: f(ex + (R() - 0.5) * 26), cy: f(ey + (R() - 0.3) * 26),
@@ -738,7 +891,6 @@
       b.className = 'room';
       b.dataset.i = i;
       b.innerHTML = '<span class="room-name"></span><span class="room-count"></span>';
-      b.querySelector('.room-name').textContent = s.name;
       b.addEventListener('click', () => selectSpace(i, b));
       roomsEl.appendChild(b);
     });
@@ -746,8 +898,11 @@
   function updateRooms() {
     roomsEl.querySelectorAll('.room').forEach((b, i) => {
       b.setAttribute('aria-current', i === cur ? 'true' : 'false');
+      b.querySelector('.room-name').textContent = L(SPACES[i].name);
       const n = photos[SPACES[i].id].length;
-      b.querySelector('.room-count').textContent = n ? (n === 1 ? '1 foto' : n + ' fotos') : (editMode ? 'Sin fotos' : 'Próximamente');
+      b.querySelector('.room-count').textContent = n
+        ? (n === 1 ? t('count.one') : t('count.many', { n: n }))
+        : (editMode ? t('count.none') : t('count.soon'));
     });
   }
 
@@ -759,7 +914,7 @@
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'thumb';
-      b.setAttribute('aria-label', 'Ver foto ' + (i + 1) + ' de ' + list.length);
+      b.setAttribute('aria-label', t('thumb.view', { i: i + 1, n: list.length }));
       const img = new Image();
       img.src = src; img.alt = ''; img.loading = 'lazy';
       b.appendChild(img);
@@ -774,6 +929,7 @@
 
   function renderStage() {
     const sp = SPACES[cur], list = photos[sp.id];
+    const name = L(sp.name);
     const has = list.length > 0;
     $('#open').hidden = !has;
     $('#stageBg').hidden = !has;
@@ -785,13 +941,13 @@
       const img = $('#stageImg');
       img.src = list[idx];
       $('#stageBg').src = list[idx];
-      img.alt = sp.name + ' del departamento Pirul, foto ' + (idx + 1) + ' de ' + list.length;
-      $('#open').setAttribute('aria-label', 'Ampliar foto de ' + sp.name);
+      img.alt = t('stage.alt', { name: name, i: idx + 1, n: list.length });
+      $('#open').setAttribute('aria-label', t('stage.open', { name: name }));
       $('#badge').textContent = (idx + 1) + ' / ' + list.length;
     }
-    $('#capTitle').textContent = sp.name;
-    $('#capText').textContent = sp.text;
-    $('#pickBtn').textContent = 'Agregar fotos a ' + sp.name.toLowerCase();
+    $('#capTitle').textContent = name;
+    $('#capText').textContent = L(sp.text);
+    $('#pickBtn').textContent = t('edit.add', { name: name.toLowerCase() });
   }
 
   function selectSpace(i, btn) {
@@ -828,9 +984,10 @@
     const sp = SPACES[cur], list = photos[sp.id];
     if (!list.length) return;
     const img = $('#lbImg');
+    const cap = t('lb.cap', { name: L(sp.name), i: idx + 1, n: list.length });
     img.src = list[idx];
-    img.alt = sp.name + ', foto ' + (idx + 1) + ' de ' + list.length;
-    $('#lbCap').textContent = sp.name + ', foto ' + (idx + 1) + ' de ' + list.length;
+    img.alt = cap;
+    $('#lbCap').textContent = cap;
     $('#lbPrev').hidden = list.length < 2;
     $('#lbNext').hidden = list.length < 2;
   }
@@ -880,23 +1037,48 @@
   /* ---------- Cerca ---------- */
   function renderCerca() {
     $('#times').innerHTML = CERCA.map((c) =>
-      '<li><div class="t-name">' + c.n + '<span class="t-type">' + c.t + '</span></div>' +
-      '<div class="t-bar" style="--m:' + c.m + '" role="img" aria-label="Aproximadamente ' + c.m + ' minutos en auto"></div>' +
-      '<div class="t-min">' + c.m + ' min</div></li>'
+      '<li><div class="t-name">' + L(c.n) + '<span class="t-type">' + L(c.t) + '</span></div>' +
+      '<div class="t-bar" style="--m:' + c.m + '" role="img" aria-label="' + t('near.aria', { n: c.m }) + '"></div>' +
+      '<div class="t-min">' + t('near.min', { n: c.m }) + '</div></li>'
     ).join('');
   }
 
+  /* ---------- Aplicar idioma ---------- */
+  const langBtn = $('#langBtn');
+  function applyLang() {
+    document.documentElement.lang = lang === 'en' ? 'en' : 'es-MX';
+    document.title = t('meta.title');
+    const md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute('content', t('meta.desc'));
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+
+    // El botón muestra el idioma al que se puede cambiar
+    $('#langLabel').textContent = lang === 'es' ? 'English' : 'Español';
+    langBtn.setAttribute('lang', lang === 'es' ? 'en' : 'es');
+
+    renderStatus();
+    renderContact();
+    renderCerca();
+    updateRooms();
+    buildThumbs();
+    renderStage();
+    renderHero();
+    if (lb.open) renderLb();
+  }
+  langBtn.addEventListener('click', () => {
+    lang = lang === 'es' ? 'en' : 'es';
+    saveLang(lang);
+    applyLang();
+  });
+
   /* ---------- Inicio ---------- */
   drawBranch($('#branch'));
-  renderStatus();
-  renderContact();
-  renderCerca();
   buildRooms();
   applyEditMode();
-  updateRooms();
-  buildThumbs();
-  renderStage();
-  renderHero();
+  applyLang();
 })();
 </script>
 </body>
