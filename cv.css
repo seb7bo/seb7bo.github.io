@@ -1,0 +1,278 @@
+/* Shared screen styles for the markdown resumes (rendered by casual-markdown). */
+
+:root {
+    --ink: #1f2328;
+    --muted: #5a6068;
+    --accent: #4b3a8c;
+    --rule: #d0cde0;
+    --desk: #eceaf2;
+    --deep: #2a2150;
+    --deep-rule: #b9b2d6;
+}
+
+html {
+    background: var(--desk);
+}
+
+body {
+    box-sizing: border-box;
+    max-width: 210mm;
+    margin: 32px auto;
+    padding: 48px 56px;
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(40, 30, 80, 0.12);
+    font-family: "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+}
+
+/* ---------- Header ---------- */
+
+h1 {
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+    background: none;
+    border: none;
+    border-bottom: 3px solid var(--accent);
+    padding: 34px 0 8px 0;
+    margin: 0 0 12px 0;
+}
+
+/* Contact block (floated span before the name) */
+body > span {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-align: right;
+    padding: 0 !important;
+    margin: 4px 12px 0 0 !important;
+}
+
+#qrcode {
+    width: 62px !important;
+    height: 62px;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* ---------- Sections ---------- */
+
+h2 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0 0 3px 0;
+    margin: 22px 0 8px 0;
+}
+
+h3 {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 14px 0 2px 0;
+}
+
+p {
+    margin: 0 0 6px 0;
+}
+
+/* casual-markdown emits one <ul> per item plus <br/> between them */
+ul,
+ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+ul + br,
+ol + br {
+    display: none;
+}
+
+li {
+    margin: 0 0 2px 0;
+}
+
+li::marker {
+    color: var(--accent);
+}
+
+/* ---------- Experience: dark title bar + timeline + skill chips ---------- */
+/* Heading is tagged "## Professional Experience {exp}" -> <h2 id="exp"> */
+
+h2#exp {
+    color: #fff !important;
+    background: var(--deep) !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 6px 12px !important;
+    margin-bottom: 4px !important;
+}
+
+#exp ~ :is(h3, p, ul):not(#exp ~ h2 ~ *) {
+    margin: 0 0 0 7px !important;
+    padding-left: 20px !important;
+    border-left: 2px solid var(--deep-rule);
+}
+
+#exp ~ h3:not(#exp ~ h2 ~ *) {
+    position: relative;
+    padding-top: 12px !important;
+    color: var(--deep);
+}
+
+#exp ~ h3:not(#exp ~ h2 ~ *)::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: calc(12px + 0.35em);
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border: 2px solid var(--deep);
+    border-radius: 50%;
+}
+
+#exp ~ p:not(#exp ~ h2 ~ *) {
+    padding-bottom: 6px;
+}
+
+#exp ~ ul:not(#exp ~ h2 ~ *) {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+    padding-bottom: 4px !important;
+}
+
+#exp ~ ul:not(#exp ~ h2 ~ *) li {
+    margin: 0;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: #fff;
+    background: var(--deep);
+    border-radius: 999px;
+}
+
+/* ---------- Education: card with graduation cap ---------- */
+/* Heading is tagged "## Education {edu}" -> <h2 id="edu"> */
+
+#edu ~ ul:not(#edu ~ h2 ~ ul) {
+    list-style: none;
+    margin: 6px 0 !important;
+    padding: 0 !important;
+}
+
+#edu ~ ul:not(#edu ~ h2 ~ ul) li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 6px 0;
+    padding: 10px 14px;
+    background: linear-gradient(90deg, #f5f3fb, #fff);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    break-inside: avoid;
+}
+
+#edu ~ ul:not(#edu ~ h2 ~ ul) li::before {
+    content: "";
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--deep) no-repeat center / 20px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 9 12 4 2 9l10 5 10-5z'/%3E%3Cpath d='M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5'/%3E%3Cpath d='M22 9v6'/%3E%3C/svg%3E");
+}
+
+#edu ~ ul:not(#edu ~ h2 ~ ul) strong {
+    color: var(--deep);
+    font-size: 1.05em;
+    margin-right: 4px;
+}
+
+/* ---------- Certifications: badge cards ---------- */
+/* Heading is tagged "## Certifications {certs}" -> <h2 id="certs"> */
+
+#certs ~ ul:not(#certs ~ h2 ~ ul) {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 4px 0 !important;
+    padding: 0 !important;
+}
+
+#certs ~ ul:not(#certs ~ h2 ~ ul) li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 7px 14px 7px 10px;
+    font-weight: 600;
+    background: #f5f3fb;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    break-inside: avoid;
+}
+
+#certs ~ ul:not(#certs ~ h2 ~ ul) li::before {
+    content: "";
+    flex: none;
+    width: 18px;
+    height: 18px;
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b3a8c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='6'/%3E%3Cpath d='M8.5 13.7 7 22l5-3 5 3-1.5-8.3'/%3E%3C/svg%3E");
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Version switcher links at the bottom */
+a[href$=".html"] {
+    display: inline-block;
+    margin: 24px 6px 0 0;
+    padding: 4px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+a[href$=".html"] span {
+    color: var(--accent) !important;
+}
+
+@media (max-width: 640px) {
+    body {
+        margin: 0;
+        padding: 24px 16px;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 26px;
+        clear: both;
+        padding-top: 12px;
+    }
+}
+
+@media print {
+    html {
+        background: #fff;
+    }
+
+    body {
+        box-shadow: none;
+    }
+}

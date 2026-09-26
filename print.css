@@ -1,79 +1,141 @@
+/* Print styles for the markdown resumes (rendered by casual-markdown). */
+
 @page {
     size: A4;
-    margin: 15mm;
+    margin: 14mm 16mm 14mm 16mm;
 }
 
 @media print {
 
-    p {
-        text-align: center;
+    :root {
+        --ink: #1f2328;
+        --muted: #5a6068;
+        --accent: #4b3a8c;
+        --rule: #d0cde0;
+    }
+
+    html,
+    body {
+        background: #fff !important;
     }
 
     body {
-        font-family: Arial, sans-serif;
-        font-size: 11pt;
-        line-height: 1.4;
-        color: #000;
-        background: #fff;
+        display: block !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+        font-size: 10.5pt;
+        line-height: 1.35 !important;
+        color: var(--ink);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
-    /* Remove weird web stuff */
+    /* ---------- Header ---------- */
+
+    h1 {
+        font-size: 24pt !important;
+        font-weight: 300;
+        letter-spacing: 0.5pt;
+        color: var(--ink) !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: 2pt solid var(--accent) !important;
+        padding: 24pt 0 6pt 0 !important;
+        margin: 0 0 8pt 0 !important;
+    }
+
+    /* Contact block (floated span before the name) */
+    body > span {
+        font-size: 9pt;
+        line-height: 1.45;
+        color: var(--muted);
+        text-align: right;
+        padding: 0 !important;
+        margin: 2pt 8pt 0 0 !important;
+    }
+
+    /* QR code linking to the online version */
+    #qrcode {
+        width: 16mm !important;
+        height: 16mm !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+
+    /* ---------- Sections ---------- */
+
+    h2 {
+        font-size: 10.5pt !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5pt;
+        color: var(--accent) !important;
+        border: none !important;
+        border-bottom: 0.75pt solid var(--rule) !important;
+        padding: 0 0 2pt 0 !important;
+        margin: 12pt 0 5pt 0 !important;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 11pt !important;
+        font-weight: 700;
+        color: var(--ink);
+        margin: 8pt 0 1pt 0 !important;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    p {
+        margin: 0 0 4pt 0;
+        text-align: justify;
+        hyphens: auto;
+    }
+
+    /* casual-markdown emits one <ul> per item plus <br/> between them */
+    ul,
+    ol {
+        margin: 0 !important;
+        padding-left: 14pt !important;
+    }
+
+    ul + br,
+    ol + br {
+        display: none;
+    }
+
+    li {
+        margin: 0 0 1pt 0;
+        break-inside: avoid;
+    }
+
+    li::marker {
+        color: var(--accent);
+    }
+
+    strong {
+        color: var(--ink);
+    }
+
+    /* Links print as plain text */
+    a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+
+    /* Hide web-only elements: language/version switcher, navbars */
+    a[href$=".html"],
     nav,
     .navbar,
     .no-print {
         display: none !important;
     }
 
-    /* Force clean layout */
-    .container,
-    .container-fluid {
-        width: 100% !important;
-        padding: 0 !important;
-    }
-
-    /* Kill flex issues */
-    .row {
-        display: block !important;
-    }
-
-    .col,
-    [class*="col-"] {
-        width: 100% !important;
-        float: none !important;
-    }
-
-    /* Headings */
-    h1 {
-        font-size: 20pt;
-        margin-bottom: 5px;
-    }
-
-    h2 {
-        font-size: 13pt;
-        border-bottom: 1px solid #000;
-        margin-top: 15px;
-    }
-
-    h3 {
-        font-size: 11pt;
-        margin-bottom: 5px;
-    }
-
-    p,
-    li {
-        font-size: 10.5pt;
-    }
-
-    /* Avoid ugly page breaks */
-    section,
-    .resume-section {
-        page-break-inside: avoid;
-        margin-bottom: 10px;
-    }
-
-    /* Links look professional */
-    a {
-        color: black;
-        text-decoration: none;
+    h1, h2, h3 {
+        orphans: 3;
+        widows: 3;
     }
 }

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <title>Resume</title>
-<link rel="stylesheet" href="print.css" media="print">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.css">
 <script src="https://cdn.jsdelivr.net/gh/casualwriter/casual-markdown/dist/casual-markdown.js"></script>
-<style>
-  body { line-height:1.5; margin:auto; padding:3px; max-width:1024px; display:none; FONT-FAMILY:CALIBRI,ARIAL; }
-  h1  { font-size:200%; padding:16px; border:1px solid lightgrey; BACKGROUND:rgb(135, 114, 227); COLOR:WHITE }
-  h2  { border-bottom:1px solid grey; padding:2px; COLOR:PURPLE }
-</style>
-<body onload="document.body.innerHTML=md.html(document.body.innerHTML); document.body.style.display='block';
+<link rel="stylesheet" href="../cv.css">
+<script src="../cv.js"></script>
+<link rel="stylesheet" href="../print.css" media="print">
+<style> body { display:none; } </style>
+<body onload="document.body.innerHTML=md.html(document.body.innerHTML); cvEnhance(); document.body.style.display='block';
               document.getElementById('qrcode').src='https://qrcode.tec-it.com/API/QRCode?size=small&dpi=120&data='+location.href" >
 <img id=qrcode style="float:right; margin:5px; margin-top:11px; border:1px solid lightgrey; width:70px" />
 <!--======= COPY ABOVE CODE AS HEADER, THEN FOLLOW WITH RESUME CONTENT IN MARKDOWN FORMAT =========-->
@@ -35,7 +33,7 @@ Mechatronics engineer with over 7 years of experience delivering complex embedde
 - **Leadership:** cross-functional and international teams, stakeholder management, facilitation  
 - **Tools:** Jira, Confluence, Git, MS Office  
 
-## Professional Experience
+## Professional Experience {exp}
 
 ### Aumovio (Project Lead / Senior Software Developer, 2025/09 - present)
 
@@ -69,11 +67,11 @@ Developed embedded software for automotive instrument clusters, contributing to 
 - C, embedded software, MISRA, unit/functional testing  
 - Debugging and defect resolution  
 
-## Education
+## Education {edu}
 
 - **Universidad La Salle** – Mechatronics Engineering (2011 - 2016)
 
-## Certifications
+## Certifications {certs}
 
 - SAFe for Teams (2023)  
 - ARM Embedded Systems Essentials (2025)  
